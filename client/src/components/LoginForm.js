@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from "@apollo/react-hooks";
 import { LOGIN_USER } from "../utils/mutations";
-
-// import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
 
 const LoginForm = () => {
@@ -13,13 +11,6 @@ const LoginForm = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [login, { error }] = useMutation(LOGIN_USER);
 
-  useEffect(() => {
-    if (error) {
-      setShowAlert(true);
-    } else {
-      setShowAlert(false);
-    }
-  }, [error]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,13 +19,6 @@ const LoginForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
 
     try {
       const { data } = await login({
